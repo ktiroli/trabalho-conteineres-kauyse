@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClassiFiscal – Documentação do TCC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="badge">CIÊNCIA DA COMPUTAÇÃO · TCC</span>
+      <h1>ClassiFiscal</h1>
+      <p>Sistema de apoio à emissão de notas fiscais para empresas do Simples Nacional. Esta página documenta o trabalho e roda em três contêineres Docker.</p>
+      <div id="apistatus" class="status">Verificando API...</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>O sistema em números</h2>
+      <div class="cards stats">
+        <article><strong>NF-e</strong><h3>NCM · CFOP · CSOSN</h3><p>Sugestão de classificação de produtos por busca textual e semântica, com motor de regras.</p></article>
+        <article><strong>NFS-e</strong><h3>CNAE · LC 116 · NBS</h3><p>Caminho de classificação para serviços, com bases públicas importadas.</p></article>
+        <article><strong>DAS</strong><h3>Simples Nacional</h3><p>Calculadora de alíquota efetiva e do DAS (Anexos I a V).</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Arquitetura dos contêineres</h2>
+      <div class="cards">
+        <article><strong>01 · Frontend</strong><h3>Nginx + HTML/CSS/JS</h3><p>Serve esta interface na porta 80 e encaminha <code>/api</code> para o backend.</p></article>
+        <article><strong>02 · Backend</strong><h3>Node.js + Express</h3><p>API REST com o CRUD das seções e a conexão com o PostgreSQL.</p></article>
+        <article><strong>03 · Banco</strong><h3>PostgreSQL 16</h3><p>Guarda os dados em um volume Docker, que persiste mesmo se o contêiner for recriado.</p></article>
+      </div>
+      <h3 class="sub">Conceitos demonstrados</h3>
+      <div class="tags"><span>Dockerfile</span><span>Docker Compose</span><span>Rede entre contêineres</span><span>Volumes</span><span>Variáveis de ambiente</span><span>Healthcheck</span><span>API REST</span><span>CRUD</span></div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <div>
+          <h2>Documentação do TCC</h2>
+          <p class="muted">As seções abaixo são carregadas em tempo real da API, direto do PostgreSQL.</p>
+        </div>
+      </div>
+      <div class="toolbar">
+        <nav id="tabs" aria-label="Categorias"></nav>
+        <input id="search" type="search" placeholder="Buscar nas seções…" aria-label="Buscar">
+      </div>
+      <p id="count" class="muted"></p>
+      <p id="status" role="status"></p>
+      <div id="posts" class="posts"></div>
+
+      <details id="form-box">
+        <summary id="form-title">+ Nova seção</summary>
+        <form id="form">
+          <select id="category" aria-label="Categoria"></select>
+          <input id="title" placeholder="Título" maxlength="200" required>
+          <textarea id="content" placeholder="Conteúdo" rows="5" required></textarea>
+          <div class="row">
+            <button type="submit" id="save">Salvar</button>
+            <button type="button" id="cancel" class="sec" hidden>Cancelar</button>
+          </div>
+        </form>
+      </details>
+    </section>
+
+    <section>
+      <h2>Fluxo da aplicação</h2>
+      <div class="flow"><span>Navegador</span><b>→</b><span>Frontend / Nginx</span><b>→</b><span>API Express</span><b>→</b><span>PostgreSQL</span></div>
+      <p class="note">Dentro da rede do Compose, o backend acessa o banco pelo nome do serviço <code>database</code>, sem depender de IP fixo. As credenciais chegam por variáveis de ambiente.</p>
+    </section>
+  </main>
+
+  <footer>ClassiFiscal · Trabalho de contêineres · Docker + Compose + PostgreSQL</footer>
+  <script src="app.js"></script>
+</body>
+</html>

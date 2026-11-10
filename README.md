@@ -21,7 +21,7 @@ Navegador ──> frontend (nginx:80) ──/api──> backend (:3000) ──> 
 cp .env.example .env
 docker compose up -d --build
 ```
-Acesse http://localhost:8080
+Acesse http://localhost:8020 (a porta é publicada pelo `docker-compose.override.yml`, usado só localmente)
 
 ## API
 | Método | Rota | Descrição |

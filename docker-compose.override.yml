@@ -1,6 +1,0 @@
-# Usado só localmente (o Compose carrega este arquivo automaticamente).
-# No Coolify o proxy publica o frontend, então a porta do host não é necessária.
-services:
-  frontend:
-    ports:
-      - "${FRONTEND_PORT:-8020}:80"
